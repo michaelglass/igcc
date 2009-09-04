@@ -1,7 +1,7 @@
 InteractiveC
 ============
 
-[InteractiveC][] is a really sloppy 'c interpreter' I through together to help me catch up no my C.
+InteractiveC is a really sloppy 'c interpreter' I through together to help me catch up no my C.
 
 It currently doesn't nicely handle blocks if entered line-by-line (and probably a lot of other things).  If you want to test blocks, write them in a text editor and paste it into IC.
 

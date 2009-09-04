@@ -19,8 +19,7 @@ def execute(str)
     test = File.exists?(WORKING_NAME) ? IO.read(WORKING_NAME) : ''
     
     # move disabling/enabling of stdout
-    test.sub!(/^\s*stdout\s*=\s*fake_stdout;.*$/, '')
-    test.sub!(/^\s*stdout\s*=\s*real_stdout;.*$/, "stdout = fake_stdout;\n")
+    test.sub!(/^\s*stdout\s*=\s*real_stdout;.*$/, "")
     test << "stdout = real_stdout;\n"
     
 #SO MESSY.  I'M SO SORRY!!

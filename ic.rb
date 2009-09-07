@@ -25,10 +25,7 @@ def execute(str)
 #SO MESSY.  I'M SO SORRY!!
     def write_test_c(test, test_includes)
       test_file = File.new(TEST_NAME, 'w')
-      test_file.puts(test_includes)
-      test_file.puts(PREFIX)
-      test_file.puts(test)
-      test_file.puts(SUFFIX)
+      test_file.puts(test_includes, PREFIX, test, SUFFIX)
       test_file.close
     end
 
@@ -46,6 +43,8 @@ def execute(str)
       test << str << "\n"
       write_test_c(test, test_includes)
       compile_output = `gcc test.c 2>&1`
+    else
+      test = test_with_a
     end
     
     
@@ -81,6 +80,7 @@ while(true)
   buff << gets
   buff.strip!
   exit(0) if buff.downcase == 'exit'
+  
   execute(buff)
   buff = ''
 end

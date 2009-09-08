@@ -6,6 +6,7 @@ INCLUDES_NAME = 'working_includes.c'
 WORKING_NAME = 'working.c'
 TEST_NAME = 'test.c'
 
+PREPREFIX = IO.read('boilerplate_includes.c')
 PREFIX = IO.read('boilerplate_start.c')
 SUFFIX = IO.read('boilerplate_end.c')
 
@@ -25,14 +26,15 @@ def execute(str)
 #SO MESSY.  I'M SO SORRY!!
     def write_test_c(test, test_includes)
       test_file = File.new(TEST_NAME, 'w')
-      test_file.puts(test_includes, PREFIX, test, SUFFIX)
+      test_file.puts(PREPREFIX, test_includes, PREFIX, test, SUFFIX)
       test_file.close
     end
+
+    test_with_a = test.dup
 
     if str.start_with? '#include'
       test_includes << str << "\n"
     else
-      test_with_a = test.dup
       test_with_a << 'a = ' << str << "\nprintf(\"[%d]\", a);\n"
     end
     
@@ -40,9 +42,11 @@ def execute(str)
     
     compile_output = `gcc test.c 2>&1`
     if($?.exitstatus != 0)
-      test << str << "\n"
-      write_test_c(test, test_includes)
-      compile_output = `gcc test.c 2>&1`
+      unless str.start_with? '#include'
+        test << str << "\n"
+        write_test_c(test, test_includes)
+        compile_output = `gcc test.c 2>&1`
+      end
     else
       test = test_with_a
     end
